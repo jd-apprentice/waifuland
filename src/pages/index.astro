@@ -1,0 +1,242 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+---
+
+<Layout title="WaifuLand - Anime Character API">
+	<Header />
+	<main class="main">
+		<section class="hero">
+			<div class="image-container">
+				<img src="" alt="Waifu" id="waifuImage" title="Waifu" />
+				<div class="loading-spinner" id="loadingSpinner">
+					Loading...
+				</div>
+			</div>
+			<button class="refresh-button" id="refreshButton">
+				<i class="fas fa-sync-alt"></i>
+				New Image
+			</button>
+		</section>
+
+		<section class="features">
+			<h2>About WaifuLand API</h2>
+			<p>
+				WaifuLand provides a simple and powerful API for accessing a
+				vast collection of anime character images. Our features include:
+			</p>
+			<ul>
+				<li>✨ Random image generation</li>
+				<li>🏷️ Tag-based filtering</li>
+				<li>🚀 Fast and reliable API</li>
+				<li>📝 Comprehensive documentation</li>
+				<li>🔒 Safe for work content filtering</li>
+			</ul>
+		</section>
+	</main>
+</Layout>
+
+<style>
+	.main {
+		padding: 1rem;
+		max-width: 1200px;
+		margin: 0 auto;
+		width: 100%;
+	}
+
+	@media (min-width: 640px) {
+		.main {
+			padding: 2rem;
+		}
+	}
+
+	.hero {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1.5rem;
+		margin-bottom: 2rem;
+	}
+
+	@media (min-width: 640px) {
+		.hero {
+			gap: 2rem;
+			margin-bottom: 4rem;
+		}
+	}
+
+	.image-container {
+		width: 100%;
+		max-width: 500px;
+		min-height: 250px;
+		max-height: 500px;
+		background-color: var(--secondary-color);
+		border-radius: 8px;
+		overflow: hidden;
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	@media (min-width: 640px) {
+		.image-container {
+			min-height: 300px;
+			max-height: 700px;
+		}
+	}
+
+	#waifuImage {
+		max-width: 100%;
+		max-height: 100%;
+		width: auto;
+		height: auto;
+		object-fit: contain;
+		display: none;
+	}
+
+	#waifuImage.loaded {
+		display: block;
+	}
+
+	.loading-spinner {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+
+	.refresh-button {
+		background-color: var(--primary-color);
+		color: white;
+		border: none;
+		padding: 0.6rem 1.2rem;
+		border-radius: 25px;
+		font-size: 1rem;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		transition: transform 0.2s ease;
+	}
+
+	@media (min-width: 640px) {
+		.refresh-button {
+			padding: 0.8rem 1.5rem;
+			font-size: 1.1rem;
+		}
+	}
+
+	.refresh-button:hover {
+		transform: scale(1.05);
+	}
+
+	.features {
+		text-align: center;
+		padding: 1.5rem;
+		background-color: var(--secondary-color);
+		border-radius: 8px;
+	}
+
+	@media (min-width: 640px) {
+		.features {
+			padding: 2rem;
+		}
+	}
+
+	.features h2 {
+		color: var(--primary-color);
+		margin-bottom: 1rem;
+		font-size: 1.5rem;
+	}
+
+	@media (min-width: 640px) {
+		.features h2 {
+			font-size: 2rem;
+		}
+	}
+
+	.features p {
+		margin-bottom: 1.5rem;
+		max-width: 600px;
+		margin-left: auto;
+		margin-right: auto;
+		font-size: 0.9rem;
+	}
+
+	@media (min-width: 640px) {
+		.features p {
+			margin-bottom: 2rem;
+			font-size: 1rem;
+		}
+	}
+
+	.features ul {
+		list-style: none;
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1rem;
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	@media (min-width: 480px) {
+		.features ul {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (min-width: 768px) {
+		.features ul {
+			grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		}
+	}
+
+	.features li {
+		padding: 1rem;
+		background-color: white;
+		border-radius: 8px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		font-size: 0.9rem;
+	}
+
+	@media (min-width: 640px) {
+		.features li {
+			font-size: 1rem;
+		}
+	}
+</style>
+
+<script>
+	const API_URL = "https://waifuland.jonathan.com.ar/api/images";
+	const waifuImage = document.getElementById(
+		"waifuImage",
+	) as HTMLImageElement;
+	const loadingSpinner = document.getElementById("loadingSpinner");
+	const refreshButton = document.getElementById("refreshButton");
+
+	async function fetchRandomImage() {
+		try {
+			loadingSpinner!.style.display = "block";
+			waifuImage.classList.remove("loaded");
+
+			const response = await fetch(API_URL);
+			const data = await response.json();
+
+			waifuImage.src = data.url;
+			waifuImage.onload = () => {
+				loadingSpinner!.style.display = "none";
+				waifuImage.classList.add("loaded");
+			};
+		} catch (error) {
+			console.error("Error fetching image:", error);
+			loadingSpinner!.textContent = "Error loading image";
+		}
+	}
+
+	// Fetch initial image
+	fetchRandomImage();
+
+	// Add click handler for refresh button
+	refreshButton?.addEventListener("click", fetchRandomImage);
+</script>

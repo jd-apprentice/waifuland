@@ -1,0 +1,159 @@
+---
+---
+<header class="header">
+	<button class="menu-button" id="menuButton" aria-label="Toggle menu">
+		<i class="fas fa-bars"></i>
+	</button>
+	
+	<h1 class="logo">WaifuLand</h1>
+	
+	<button class="login-button">
+		<i class="fas fa-user"></i>
+		<span class="login-text">Login</span>
+	</button>
+
+	<nav class="menu" id="menu">
+		<ul>
+			<li><a href="/">Home</a></li>
+			<li><a href="/docs">API Docs</a></li>
+			<li><a href="/about">About</a></li>
+		</ul>
+	</nav>
+</header>
+
+<style>
+	.header {
+		height: var(--header-height);
+		padding: 0 1rem;
+		background-color: white;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+		position: relative;
+	}
+
+	@media (min-width: 640px) {
+		.header {
+			padding: 0 2rem;
+		}
+	}
+
+	.logo {
+		font-size: 1.2rem;
+		color: var(--primary-color);
+		text-align: center;
+		flex-grow: 1;
+	}
+
+	@media (min-width: 640px) {
+		.logo {
+			font-size: 1.5rem;
+		}
+	}
+
+	.menu-button, .login-button {
+		background: none;
+		border: none;
+		font-size: 1.1rem;
+		cursor: pointer;
+		padding: 0.5rem;
+		color: var(--text-color);
+	}
+
+	@media (min-width: 640px) {
+		.menu-button, .login-button {
+			font-size: 1.2rem;
+		}
+	}
+
+	.login-button {
+		display: flex;
+		align-items: center;
+		gap: 0.3rem;
+	}
+
+	@media (min-width: 640px) {
+		.login-button {
+			gap: 0.5rem;
+		}
+	}
+
+	.login-text {
+		display: none;
+	}
+
+	@media (min-width: 480px) {
+		.login-text {
+			display: inline;
+		}
+	}
+
+	.menu {
+		position: fixed;
+		top: var(--header-height);
+		left: -100%;
+		background-color: white;
+		width: 100%;
+		height: calc(100vh - var(--header-height));
+		box-shadow: 2px 0 4px rgba(0,0,0,0.1);
+		transition: left 0.3s ease;
+		z-index: 1000;
+	}
+
+	@media (min-width: 640px) {
+		.menu {
+			width: 250px;
+		}
+	}
+
+	.menu.active {
+		left: 0;
+	}
+
+	.menu ul {
+		list-style: none;
+		padding: 1rem;
+	}
+
+	.menu li {
+		margin: 1rem 0;
+	}
+
+	.menu a {
+		color: var(--text-color);
+		text-decoration: none;
+		font-size: 1rem;
+		display: block;
+		padding: 0.5rem;
+	}
+
+	@media (min-width: 640px) {
+		.menu a {
+			font-size: 1.1rem;
+		}
+	}
+
+	.menu a:hover {
+		color: var(--primary-color);
+		background-color: var(--secondary-color);
+		border-radius: 4px;
+	}
+</style>
+
+<script>
+	const menuButton = document.getElementById('menuButton');
+	const menu = document.getElementById('menu');
+
+	menuButton?.addEventListener('click', () => {
+		menu?.classList.toggle('active');
+	});
+
+	// Close menu when clicking outside
+	document.addEventListener('click', (event) => {
+		const target = event.target as HTMLElement;
+		if (!target.closest('#menu') && !target.closest('#menuButton') && menu?.classList.contains('active')) {
+			menu.classList.remove('active');
+		}
+	});
+</script>
