@@ -1,0 +1,110 @@
+---
+import Header from "../components/Header.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<style>
+    .main {
+        padding: 1rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .hero {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    @media (min-width: 640px) {
+        .main {
+            padding: 2rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        li {
+            font-size: 1.2rem;
+        }
+
+        span {
+            font-size: 1.2rem;
+        }
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    h2 {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        margin-bottom: 0.5rem;
+    }
+
+    span {
+        font-weight: bold;
+    }
+</style>
+
+<Layout title="WaifuLand - Documentation">
+    <Header />
+    <main class="main">
+        <section class="hero">
+            <h1>Documentation</h1>
+
+            <h2>Endpoints</h2>
+
+            <ul>
+                <li>
+                    <span>/api/images</span>
+                </li>
+                <li>
+                    <span>/api/images?size=1</span>
+                </li>
+                <li>
+                    <span>/api/images?tag_id=1</span>
+                </li>
+            </ul>
+
+            <h2>Tags</h2>
+
+            <ul>
+                <li>
+                    <span>1</span> - Waifu
+                </li>
+                <li>
+                    <span>2</span> - Neko
+                </li>
+                <li>
+                    <span>3</span> - Happy
+                </li>
+                <li>
+                    <span>4</span> - Sad
+                </li>
+                <li>
+                    <span>5</span> - Ecchi
+                </li>
+            </ul>
+        </section>
+    </main>
+</Layout>
