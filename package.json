@@ -1,5 +1,5 @@
 {
-  "name": "@example/basics",
+  "name": "waifuland",
   "type": "module",
   "version": "0.0.1",
   "private": true,
@@ -11,6 +11,12 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^4.15.3"
+    "@astrojs/vercel": "^8.0.8",
+    "@auth/core": "^0.37.4",
+    "astro": "^5.3.1",
+    "auth-astro": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.5"
   }
 }

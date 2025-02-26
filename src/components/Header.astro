@@ -1,16 +1,24 @@
 ---
+const isProd = import.meta.env.SITE.includes("jonathan.com.ar");
 ---
+
 <header class="header">
 	<button class="menu-button" id="menuButton" aria-label="Toggle menu">
 		<i class="fas fa-bars"></i>
 	</button>
-	
+
 	<h1 class="logo">WaifuLand</h1>
-	
-	<button class="login-button">
-		<i class="fas fa-user"></i>
-		<span class="login-text">Login</span>
-	</button>
+
+	{
+		!isProd && (
+			<button class="login-button">
+				<i class="fas fa-user" />
+				<a href="/login" class="login-link">
+					<span class="login-text">Login</span>
+				</a>
+			</button>
+		)
+	}
 
 	<nav class="menu" id="menu">
 		<ul>
@@ -29,7 +37,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 		position: relative;
 	}
 
@@ -52,7 +60,8 @@
 		}
 	}
 
-	.menu-button, .login-button {
+	.menu-button,
+	.login-button {
 		background: none;
 		border: none;
 		font-size: 1.1rem;
@@ -62,7 +71,8 @@
 	}
 
 	@media (min-width: 640px) {
-		.menu-button, .login-button {
+		.menu-button,
+		.login-button {
 			font-size: 1.2rem;
 		}
 	}
@@ -81,6 +91,12 @@
 
 	.login-text {
 		display: none;
+		text-decoration: none;
+	}
+
+	.login-link {
+		text-decoration: none;
+		color: var(--text-color);
 	}
 
 	@media (min-width: 480px) {
@@ -96,7 +112,7 @@
 		background-color: white;
 		width: 100%;
 		height: calc(100vh - var(--header-height));
-		box-shadow: 2px 0 4px rgba(0,0,0,0.1);
+		box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
 		transition: left 0.3s ease;
 		z-index: 1000;
 	}
@@ -142,18 +158,22 @@
 </style>
 
 <script>
-	const menuButton = document.getElementById('menuButton');
-	const menu = document.getElementById('menu');
+	const menuButton = document.getElementById("menuButton");
+	const menu = document.getElementById("menu");
 
-	menuButton?.addEventListener('click', () => {
-		menu?.classList.toggle('active');
+	menuButton?.addEventListener("click", () => {
+		menu?.classList.toggle("active");
 	});
 
 	// Close menu when clicking outside
-	document.addEventListener('click', (event) => {
+	document.addEventListener("click", (event) => {
 		const target = event.target as HTMLElement;
-		if (!target.closest('#menu') && !target.closest('#menuButton') && menu?.classList.contains('active')) {
-			menu.classList.remove('active');
+		if (
+			!target.closest("#menu") &&
+			!target.closest("#menuButton") &&
+			menu?.classList.contains("active")
+		) {
+			menu.classList.remove("active");
 		}
 	});
 </script>
